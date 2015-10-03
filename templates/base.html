@@ -1,0 +1,37 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="{% static "bootstrap/css/bootstrap.min.css" %}">
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="navbar">
+				<div class="navbar-inner">
+					<a href="/"><h2>Wiki</h2></a>
+				</div>
+			</div>
+			<div class="row-fluid">
+			    <div class="span3 well">
+			        <h4>Документы</h4>
+			        <ul>
+			        {% for file in files %}
+			            <a href="/{{file.url}}">
+			                <li> 
+			                	{% if file.name = text.name %} <b> {% endif %} 
+			                	{{ file.name }} 
+			                	{% if file.name = text.name %} </b> {% endif %}
+			                </li>
+			            </a>
+			        {% endfor %}
+			        </ul>
+			    <a href="/add"><button type="submit" class="btn">добавить документ</button></a>
+			    </div>
+			    <div class="span9">
+					{% block main %}{% endblock %}
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

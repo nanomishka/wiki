@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block main %}
+    <h3> {{ text.name }} </h3>
+    {% if text.data != "none" %} 
+        <a href="/edit/{{text.url}}">редактировать</a> 
+        <hr>
+        {% autoescape off %}{{ text.data }}{% endautoescape %}
+    {% endif %}
+{% endblock %}
