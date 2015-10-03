@@ -3,47 +3,52 @@ from django.shortcuts import render, redirect
 from wikitest.models import Files
 import markdown2
 
-# Create your views here.
-
+# default url 
 DEF_URL = "README"
-ERROR = "Извините, данного документа не существует"
 
 def index(request, url):
 
-	files = Files.objects.all()
-	
+	# find all files for menu
+	files = Files.objects.all().values("name", "url")
+
+	# set default url README
 	if url == "":
 		url = DEF_URL
 
-	doc = Files()
+	# get content
+	document = Files()
 	try:
-		doc = Files.objects.get(url=url)
-		html_data = markdown2.markdown(doc.data)
-		doc.data = html_data
+		document = Files.objects.get(url=url)
+		html_data = markdown2.markdown(document.data)
+		document.data = html_data
+		document.status = "ok"
 	except:
-		doc.name = ERROR
-		doc.data = "none"
+		document.status = "none"
 
 	context = {
 		"files": files,
-		"text": doc,
+		"document": document,
 	}
 	return render(request, 'index.html', context)
 
 def edit(request, url):
 
+	# find all files for menu
 	files = Files.objects.all()
 
-	doc = Files()
+	# get content
+	document = Files()
 	try:
-		doc = Files.objects.get(url=url)
+		document = Files.objects.get(url=url)
+		html_data = markdown2.markdown(document.data)
+		document.data = html_data
+		document.status = "ok"
 	except:
-		doc.name = ERROR
-		doc.data = "none"
+		document.status = "none"
 
 	context = {
 		"files": files,
-		"text": doc,
+		"document": document,
 	}
 	return render(request, 'edit.html', context)
 
@@ -60,20 +65,21 @@ def save(request):
 	else:
 		doc = Files.objects.create(name=name, data=data, url=name.replace (" ", "_"))
 
-
 	doc.save()
 
 	return redirect('index', doc.url)
 
 def add(request):
 
+	# find all files for menu
 	files = Files.objects.all()
 
-	text = Files()
-	text.url = "none"
+	# empty document without url
+	document = Files()
+	document.url = "none"
 
 	context = {
 		"files": files,
-		"text": text,
+		"text": document,
 	}
 	return render(request, 'edit.html', context)

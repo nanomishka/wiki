@@ -1,23 +1,25 @@
 {% extends "base.html" %}
+
 {% block main %}
+    <form action="/save" method="post">
 
-<form action="/save" method="post">
-	{% if text.data != "none" %} 
-	    <h5>Название документа</h5>
-	    <textarea name="doc_name" rows="1" cols="70" required>{{text.name}}</textarea>
-	    
-	    <h5>Содержимое документа</h5>
-	    <textarea name="doc_data" rows="15" style="width: 700px" required>{{ text.data }}</textarea>
+    	{% if document.status == "ok" %} 
+        
+    	    <h5>Название документа</h5>
+    	    <textarea name="doc_name" rows="1" cols="70" required>{{document.name}}</textarea>
+    	    
+    	    <h5>Содержимое документа</h5>
+    	    <textarea name="doc_data" rows="15" style="width: 700px" required>{{ document.data }}</textarea>
 
-	    <input type="hidden" name="doc_url" value="{{text.url}}">
-	    
-	    <div>
-	        <a href="/{{text.name}}"><button type="submit" class="btn">Отмена</button></a>
-	        <button type="submit" class="btn btn-success">Сохранить</button>
-	    </div>
-    {% else %}
-    	<h3>{{text.name}}</h3>
-    {% endif %}
-    
-</form>
+    	    <input type="hidden" name="doc_url" value="{{document.url}}">
+    	    
+    	    <div>
+    	        <a href="/{{document.name}}"><button type="submit" class="btn">Отмена</button></a>
+    	        <button type="submit" class="btn btn-success">Сохранить</button>
+    	    </div>
+        {% else %}
+        	<h3> Извините, данного документа не существует </h3>
+        {% endif %}
+        
+    </form>
 {% endblock %}

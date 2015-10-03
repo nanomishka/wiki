@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 {% block main %}
-    <h3> {{ text.name }} </h3>
-    {% if text.data != "none" %} 
-        <a href="/edit/{{text.url}}">редактировать</a> 
+
+    {% if document.status == "ok" %} 
+        <h3> {{ document.name }} </h3>
+        <a href="/edit/{{document.url}}">редактировать</a> 
         <hr>
-        {% autoescape off %}{{ text.data }}{% endautoescape %}
+        {% autoescape off %}{{ document.data }}{% endautoescape %}
+    {% else %}
+        <h3> Извините, данного документа не существует </h3>
     {% endif %}
+
 {% endblock %}

@@ -19,14 +19,14 @@
 			        {% for file in files %}
 			            <a href="/{{file.url}}">
 			                <li> 
-			                	{% if file.name = text.name %} <b> {% endif %} 
+			                	{% if file.name = document.name %} <b> {% endif %} 
 			                	{{ file.name }} 
-			                	{% if file.name = text.name %} </b> {% endif %}
+			                	{% if file.name = document.name %} </b> {% endif %}
 			                </li>
 			            </a>
 			        {% endfor %}
 			        </ul>
-			    <a href="/add"><button type="submit" class="btn">добавить документ</button></a>
+			    <a href="/add"><button type="submit" class="btn">+ добавить документ</button></a>
 			    </div>
 			    <div class="span9">
 					{% block main %}{% endblock %}
