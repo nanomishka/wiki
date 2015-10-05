@@ -40,8 +40,6 @@ def edit(request, url):
 	document = Files()
 	try:
 		document = Files.objects.get(url=url)
-		html_data = markdown2.markdown(document.data)
-		document.data = html_data
 		document.status = "ok"
 	except:
 		document.status = "none"
@@ -76,10 +74,11 @@ def add(request):
 
 	# empty document without url
 	document = Files()
+	document.status = "ok"
 	document.url = "none"
 
 	context = {
 		"files": files,
-		"text": document,
+		"document": document,
 	}
 	return render(request, 'edit.html', context)
